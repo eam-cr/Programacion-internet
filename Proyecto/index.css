@@ -2,7 +2,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background-color: #fcf7f7;
+            background-color: #ede0e0;
         }
 
         /* --- Estilos del Login --- */
@@ -18,7 +18,7 @@
             background-color: #f4f6f4;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(25, 17, 17, 0.1);
+            box-shadow: 0 4px 10px rgba(20, 13, 13, 0.1);
         }
         /* --- Titulo del Login --- */
         .login-container h1 {
@@ -139,7 +139,7 @@
             font-size: 0.95em;
         }
         table thead {
-            background-color: #333;
+            background-color: #403f3f;
             color: white;
         }
         table th, table td {
@@ -157,6 +157,6 @@
             text-align: center;
             padding: 20px;
             margin-top: 30px;
-            color: #777;
+            color: #b9b7b7;
             background-color: #f9f9f9;
         }
