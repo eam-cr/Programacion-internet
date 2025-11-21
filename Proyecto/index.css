@@ -2,7 +2,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background-color: #fcf7f7;
+            background-color: #f4f4f4;
         }
 
         /* --- Estilos del Login --- */
@@ -15,21 +15,21 @@
         .login-container {
             width: 100%;
             max-width: 400px;
-            background-color: #f4f6f4;
+            background-color: #ffffff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(25, 17, 17, 0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         /* --- Titulo del Login --- */
         .login-container h1 {
-            color: #ebe6e6;
+            color: #fdf8f8;
             margin: 0 0 25px 0;
             text-align: center;
         }
         .login-container legend {
             font-size: 1.5em;
             font-weight: bold;
-            color: #120101;
+            color: #333;
             text-align: center;
             margin-bottom: 20px;
             width: 100%;
@@ -43,7 +43,7 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            color: #f95959;
+            color: #555;
         }
         .login-container input[type="email"],
         .login-container input[type="password"] {
@@ -57,8 +57,8 @@
         .login-container button {
             width: 100%;
             padding: 12px;
-            background-color: #6d78f9;
-            color: rgb(252, 249, 249);
+            background-color: #333;
+            color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -72,7 +72,7 @@
         }
         
         header {
-            background-color: #695c5c;
+            background-color: #333;
             color: white;
             padding: 20px;
             text-align: center;
@@ -83,7 +83,7 @@
         }
 
         nav {
-            background-color: #655f5fdb;
+            background-color: #444;
             padding: 10px;
             text-align: center;
         }

@@ -6,6 +6,8 @@
     <title>Plataforma Universitaria</title>
     <link rel="stylesheet" href="index.css">
     
+
+
     <!-- =======================
           VISTA DE LOGIN
     ======================== -->
@@ -38,7 +40,7 @@
     <!-- =======================
         VISTA DE PLATAFORMA (Oculta)
     ======================== -->
-    <div id="plataforma-view">
+    <div id="platform-view">
         <header>
             <h1>Plataforma Universitaria</h1>
         </header>
@@ -171,16 +173,16 @@
             
             // Vistas principales
             const loginView = document.getElementById("login-view");
-            const plataformaView = document.getElementById("plataforma-view");
+            const platformView = document.getElementById("platform-view");
             
             // Formulario de Login
             const loginForm = document.getElementById("login-form");
             
             // Secciones de la plataforma
             const sections = {
-                estudiantes: document.getElementById("estudiantes-seleccion"),
-                cursos: document.getElementById("cursos-seleccion"),
-                profesores: document.getElementById("profesores-seleccion")
+                estudiantes: document.getElementById("estudiantes-section"),
+                cursos: document.getElementById("cursos-section"),
+                profesores: document.getElementById("profesores-section")
             };
             
             // Enlaces de navegación
@@ -194,7 +196,7 @@
             // Función para mostrar una vista (Login o Plataforma)
             function showView(viewToShow) {
                 loginView.style.display = (viewToShow === 'login') ? 'flex' : 'none';
-                plataformaView.style.display = (viewToShow === 'plataforma') ? 'block' : 'none';
+                platformView.style.display = (viewToShow === 'platform') ? 'block' : 'none';
             }
 
             // Función para mostrar una sección de la plataforma
@@ -218,14 +220,14 @@
                 }
             }
 
-            // --- Eventos ---
+            // --- Event Listeners ---
 
             // 1. Manejar el envío del formulario de Login
             loginForm.addEventListener("submit", function(event) {
                 event.preventDefault(); // Evita que la página se recargue
                 
                 // Oculta login, muestra plataforma
-                showView('plataforma');
+                showView('platform');
                 // Muestra la sección de estudiantes por defecto
                 showSection('estudiantes');
             });
