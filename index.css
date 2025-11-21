@@ -1,0 +1,162 @@
+    /*-- CSS Interno para toda la aplicación -->**/
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* --- Estilos del Login --- */
+        #login-view {
+            display: flex; /* Visible por defecto */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        /* --- Titulo del Login --- */
+        .login-container h1 {
+            color: #fdf8f8;
+            margin: 0 0 25px 0;
+            text-align: center;
+        }
+        .login-container legend {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .login-container fieldset {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+        .login-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        .login-container input[type="email"],
+        .login-container input[type="password"] {
+            width: 95%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* --- Estilos de la Plataforma --- */
+        #platform-view {
+            display: none; /* Oculta por defecto */
+        }
+        
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer; /* Cambiado para JS */
+        }
+        /* Color para el link activo (manejado por JS) */
+        nav a.active {
+            color: #50e3c2; 
+        }
+        /* Color para el link de Salir */
+        nav a.logout {
+            color: #ffb3b3; 
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        /* Oculta todas las secciones de la plataforma por defecto */
+        #platform-view main section {
+            display: none; 
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        
+        /* Muestra la sección activa (manejado por JS) */
+        #platform-view main section.active {
+            display: block;
+        }
+
+        section h2 {
+            color: #333;
+            border-bottom: 2px solid #50e3c2;
+            padding-bottom: 10px;
+        }
+
+        /* Estilos de Tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+        table thead {
+            background-color: #333;
+            color: white;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+        }
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tbody tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: #777;
+            background-color: #f9f9f9;
+        }

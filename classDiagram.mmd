@@ -2,12 +2,21 @@ classDiagram
     class Estudiante {
         -id: int
         -nombre: string
-        -apellido: string
         -email: string
         -carrera: string
-        +registrar(): void
+        +registrarusuario(): void
         +editarPerfil(): void
-        +consultarCursos(): List<Curso>
+        +consultarCursosDisponibles(): List<Curso>
+        +consultarCursosMatriculados(): List<Grupo>
+    }
+
+    class Profesor {
+        -idProfesor: int
+        -nombre: string
+        -email: string
+        -especialidad: string
+        +idasignarCurso(): void
+        +consultarCursosAsignados(): List<Curso>
     }
 
     class Curso {
@@ -18,21 +27,35 @@ classDiagram
         +retirar(): void
     }
 
-    Estudiante "1" --> "*" Curso : matrícula
+    class Grupo {
+        -idGrupo: int
+        -idCurso: int
+        -idProfesor: int
+        -idPeriodo: int
+        -capacidad:int 
+        -numerogrupo: int
+        -horario: string
+        +idProfesor(): void
+        +idEstudiante(): void
+    }
 
     class Periodo {
-        -anio: int
+        -año: int
         -nombre: string
         -activo: boolean
         +iniciarPeriodo(): void
         +finalizarPeriodo(): void
     }
 
-    class Grupo {
-        -idCurso: string
-        -idPeriodo: int
-        -idProfesor: int
-        -horario: string
-        +asignarProfesor(): void
-        +definirHorario(): void
+    class Matricula{
+        -idMatricula: int
+        -idEstudiante: int
+        -idGrupo: int
+        -fechaMatricula: date
     }
+
+    Estudiante "1" --> "1..*" Matricula : realiza
+    Matricula "1" --> "1" Grupo : pertenece a
+    Grupo "1..*" --> "1" Curso : imparte
+    Profesor "1" --> "1..*" Grupo : imparte
+    Periodo "1..*" --> "1..*" Grupo : se ofrece en
