@@ -1,162 +1,170 @@
-    /*-- CSS Interno para toda la aplicación -->**/
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #ede0e0;
-        }
+  /*-- CSS Interno para toda la aplicación -->**/
+body {
+    font-family: Arial, sans-serif; /* Fuente principal limpia y legible */
+    margin: 0; /* Elimina márgenes por defecto del navegador */
+    background-color: #ede0e0; /* Fondo suave y cálido */
+}
 
-        /* --- Estilos del Login --- */
-        #login-view {
-            display: flex; /* Visible por defecto */
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .login-container {
-            width: 100%;
-            max-width: 400px;
-            background-color: #f4f6f4;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(20, 13, 13, 0.1);
-        }
-        /* --- Titulo del Login --- */
-        .login-container h1 {
-            color: #ebe6e6;
-            margin: 0 0 25px 0;
-            text-align: center;
-        }
-        .login-container legend {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #120101;
-            text-align: center;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-        .login-container fieldset {
-            border: none;
-            padding: 0;
-            margin: 0;
-        }
-        .login-container label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #f95959;
-        }
-        .login-container input[type="email"],
-        .login-container input[type="password"] {
-            width: 95%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            margin-bottom: 15px;
-        }
-        .login-container button {
-            width: 100%;
-            padding: 12px;
-            background-color: #6d78f9;
-            color: rgb(252, 249, 249);
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
+/* --- Estilos del Login --- */
+#login-view {
+    display: flex; /* Visible por defecto - centrado con flexbox */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    min-height: 100vh; /* Ocupa toda la altura de la ventana */
+}
+.login-container {
+    width: 100%;
+    max-width: 400px; /* Ancho máximo para formularios móviles */
+    background-color: #f4f6f4; /* Fondo claro del contenedor */
+    padding: 30px; /* Espaciado interno generoso */
+    border-radius: 8px; /* Esquinas redondeadas modernas */
+    box-shadow: 0 4px 10px rgba(20, 13, 13, 0.1); /* Sombra sutil para profundidad */
+}
 
-        /* --- Estilos de la Plataforma --- */
-        #platform-view {
-            display: none; /* Oculta por defecto */
-        }
-        
-        header {
-            background-color: #695c5c;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2em;
-        }
+/* --- Titulo del Login --- */
+.login-container h1 {
+    color: #ebe6e6;
+    margin: 0 0 25px 0; /* Espaciado inferior para separación */
+    text-align: center; /* Centrado del título */
+}
+.login-container legend {
+    font-size: 1.5em; /* Tamaño de fuente aumentado */
+    font-weight: bold; /* Negrita para énfasis */
+    color: #120101; /* Color oscuro para buen contraste */
+    text-align: center; /* Centrado del texto */
+    margin-bottom: 20px; /* Separación con los campos */
+    width: 100%; /* Ocupa todo el ancho disponible */
+}
+.login-container fieldset {
+    border: none; /* Elimina borde por defecto */
+    padding: 0; /* Sin padding adicional */
+    margin: 0; /* Sin margen externo */
+}
+.login-container label {
+    display: block; /* Cada label en línea completa */
+    margin-bottom: 5px; /* Separación con el input */
+    font-weight: bold; /* Negrita para mejor legibilidad */
+    color: #f95959; /* Color acentuado para los labels */
+}
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 95%; /* Ancho casi completo del contenedor */
+    padding: 12px; /* Espaciado interno cómodo */
+    border: 1px solid #ccc; /* Borde sutil */
+    border-radius: 4px; /* Esquinas ligeramente redondeadas */
+    font-size: 16px; /* Tamaño de fuente accesible */
+    margin-bottom: 15px; /* Separación entre campos */
+}
+.login-container button {
+    width: 100%; /* Botón de ancho completo */
+    padding: 12px; /* Espaciado interno consistente */
+    background-color: #6d78f9; /* Color primario llamativo */
+    color: rgb(252, 249, 249); /* Texto blanco para contraste */
+    border: none; /* Sin borde para estilo moderno */
+    border-radius: 4px; /* Esquinas redondeadas */
+    cursor: pointer; /* Indicador de elemento clickeable */
+    font-size: 16px; /* Tamaño de fuente legible */
+    font-weight: bold; /* Énfasis en el texto */
+}
 
-        nav {
-            background-color: #655f5fdb;
-            padding: 10px;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            font-weight: bold;
-            font-size: 1.1em;
-            cursor: pointer; /* Cambiado para JS */
-        }
-        /* Color para el link activo (manejado por JS) */
-        nav a.active {
-            color: #50e3c2; 
-        }
-        /* Color para el link de Salir */
-        nav a.logout {
-            color: #ffb3b3; 
-        }
+/* --- Estilos de la Plataforma --- */
+#platform-view {
+    display: none; /* Oculta por defecto - se muestra tras login */
+}
 
-        main {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-        
-        /* Oculta todas las secciones de la plataforma por defecto */
-        #platform-view main section {
-            display: none; 
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            overflow-x: auto;
-        }
-        
-        /* Muestra la sección activa (manejado por JS) */
-        #platform-view main section.active {
-            display: block;
-        }
+/* Cabecera de la plataforma */
+header {
+    background-color: #695c5c; /* Color oscuro elegante */
+    color: white; /* Texto blanco para contraste */
+    padding: 20px; /* Espaciado interno amplio */
+    text-align: center; /* Centrado del contenido */
+}
+header h1 {
+    margin: 0; /* Elimina margen por defecto */
+    font-size: 2em; /* Tamaño grande para el título principal */
+}
 
-        section h2 {
-            color: #333;
-            border-bottom: 2px solid #50e3c2;
-            padding-bottom: 10px;
-        }
+/* Navegación principal */
+nav {
+    background-color: #655f5fdb; /* Fondo semitransparente oscuro */
+    padding: 10px; /* Espaciado interno reducido */
+    text-align: center; /* Centrado de los enlaces */
+}
+nav a {
+    color: white; /* Texto blanco para contraste */
+    text-decoration: none; /* Sin subrayado para estilo limpio */
+    padding: 10px 15px; /* Espaciado interno cómodo */
+    font-weight: bold; /* Negrita para importancia */
+    font-size: 1.1em; /* Tamaño ligeramente aumentado */
+    cursor: pointer; /* Cambiado para JS - indica interactividad */
+}
 
-        /* Estilos de Tabla */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 0.95em;
-        }
-        table thead {
-            background-color: #403f3f;
-            color: white;
-        }
-        table th, table td {
-            padding: 12px;
-            text-align: left;
-        }
-        table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        table tbody tr {
-            border-bottom: 1px solid #ddd;
-        }
+/* Estado activo del menú (controlado por JavaScript) */
+nav a.active {
+    color: #50e3c2; /* Color verde azulado para el ítem activo */
+}
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-            color: #b9b7b7;
-            background-color: #f9f9f9;
-        }
+/* Enlace de cierre de sesión */
+nav a.logout {
+    color: #ffb3b3; /* Color rojo suave para acción destructiva */
+}
+
+/* Área de contenido principal */
+main {
+    max-width: 1000px; /* Ancho máximo para lectura cómoda */
+    margin: 20px auto; /* Centrado con margen superior/inferior */
+    padding: 0 20px; /* Espaciado lateral en móviles */
+}
+
+/* Secciones de contenido - ocultas por defecto */
+#platform-view main section {
+    display: none; /* Ocultas inicialmente */
+    background-color: #ffffff; /* Fondo blanco puro */
+    padding: 20px; /* Espaciado interno generoso */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra sutil para elevación */
+    overflow-x: auto; /* Scroll horizontal si es necesario */
+}
+
+/* Sección activa visible (controlada por JavaScript) */
+#platform-view main section.active {
+    display: block; /* Muestra la sección activa */
+}
+
+/* Títulos de sección */
+section h2 {
+    color: #333; /* Color oscuro para buen contraste */
+    border-bottom: 2px solid #50e3c2; /* Línea decorativa inferior */
+    padding-bottom: 10px; /* Espacio entre texto y línea */
+}
+
+/* --- Estilos de Tabla --- */
+table {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    border-collapse: collapse; /* Bordes unificados */
+    margin-top: 15px; /* Separación con elementos superiores */
+    font-size: 0.95em; /* Tamaño ligeramente reducido */
+}
+table thead {
+    background-color: #403f3f; /* Fondo oscuro para encabezados */
+    color: white; /* Texto blanco para contraste */
+}
+table th, table td {
+    padding: 12px; /* Espaciado interno cómodo */
+    text-align: left; /* Alineación izquierda estándar */
+}
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Filas pares con fondo alternado */
+}
+table tbody tr {
+    border-bottom: 1px solid #ddd; /* Separador sutil entre filas */
+}
+
+/* Pie de página */
+footer {
+    text-align: center; /* Contenido centrado */
+    padding: 20px; /* Espaciado interno */
+    margin-top: 30px; /* Separación del contenido principal */
+    color: #b9b7b7; /* Color de texto discreto */
+    background-color: #f9f9f9; /* Fondo sutil diferenciado */
+}
