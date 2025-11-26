@@ -15,7 +15,7 @@ body {
 .login-container {
     width: 100%;
     max-width: 400px; /* Ancho máximo para formularios móviles */
-    background-color: #f4f6f4; /* Fondo claro del contenedor */
+    background-color: #b2deb2; /* Fondo claro del contenedor */
     padding: 30px; /* Espaciado interno generoso */
     border-radius: 8px; /* Esquinas redondeadas modernas */
     box-shadow: 0 4px 10px rgb(250, 34, 5); /* Sombra sutil para profundidad */
@@ -23,7 +23,7 @@ body {
 
 /* --- Titulo del Login --- */
 .login-container h1 {
-    color: #ebe6e6;
+    color: #1a0101;
     margin: 0 0 25px 0; /* Espaciado inferior para separación */
     text-align: center; /* Centrado del título */
 }
@@ -74,7 +74,7 @@ body {
 
 /* Cabecera de la plataforma */
 header {
-    background-color: #695c5c; /* Color oscuro elegante */
+    background-color: #6d4b4b; /* Color oscuro elegante */
     color: white; /* Texto blanco para contraste */
     padding: 20px; /* Espaciado interno amplio */
     text-align: center; /* Centrado del contenido */
@@ -86,7 +86,7 @@ header h1 {
 
 /* Navegación principal */
 nav {
-    background-color: #655f5fdb; /* Fondo semitransparente oscuro */
+    background-color: #1a1414db; /* Fondo semitransparente oscuro */
     padding: 10px; /* Espaciado interno reducido */
     text-align: center; /* Centrado de los enlaces */
 }
@@ -134,7 +134,7 @@ main {
 /* Títulos de sección */
 section h2 {
     color: #333; /* Color oscuro para buen contraste */
-    border-bottom: 2px solid #50e3c2; /* Línea decorativa inferior */
+    border-bottom: 2px solid #ced27a; /* Línea decorativa inferior */
     padding-bottom: 10px; /* Espacio entre texto y línea */
 }
 
@@ -172,6 +172,6 @@ tr.selected {
     background-color: #68bac5 !important;/* Color de fondo para fila seleccionada en menu */
 }
 tr:hover {
-    background-color: #439ebe;/* Color de fondo al pasar el cursor en menu */
+    background-color: #3ea6cc;/* Color de fondo al pasar el cursor en menu */
     cursor: pointer;
 }

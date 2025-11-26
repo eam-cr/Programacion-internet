@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plataforma Universitaria</title>
     <link rel="stylesheet" href="index.css">
-    
+   
     <!-- =======================
           VISTA DE LOGIN
     ======================== -->
@@ -14,27 +14,27 @@
             <header>
                 <h1>Universitaria Central</h1>
             </header>
-            
+           
             <form id="login-form">
                 <fieldset>
                     <legend>Inicio de Sesión</legend>
-                    
+                   
                     <div>
                         <label for="email">Correo Electrónico:</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-                    
+                   
                     <div>
                         <label for="password">Contraseña:</label>
                         <input type="password" id="password" name="password" required>
                     </div>
-                    
+                   
                     <button type="submit">Ingresar</button>
                 </fieldset>
             </form>
         </section>
     </main>
-
+ 
     <!-- =======================
         VISTA DE PLATAFORMA (Oculta)
     ======================== -->
@@ -42,14 +42,14 @@
         <header>
             <h1>Plataforma Universitaria</h1>
         </header>
-
+ 
         <nav>
             <a id="nav-estudiantes" class="active">Estudiantes</a>
             <a id="nav-cursos">Cursos</a>
             <a id="nav-profesores">Profesores</a>
             <a id="nav-salir" class="logout">Salir</a>
         </nav>
-
+ 
         <main>
             <!-- Módulo de Estudiantes -->
             <section id="estudiantes-section" class="active">
@@ -85,7 +85,7 @@
                     </tbody>
                 </table>
             </section>
-
+ 
             <!-- Módulo de Cursos -->
             <section id="cursos-section">
                 <h2>Módulo de Cursos</h2>
@@ -120,7 +120,7 @@
                     </tbody>
                 </table>
             </section>
-
+ 
             <!-- Módulo de Profesores -->
             <section id="profesores-section">
                 <h2>Módulo de Profesores</h2>
@@ -156,108 +156,136 @@
                 </table>
             </section>
         </main>
-
+ 
         <footer>
             <p>&copy; 2025 Plataforma Universitaria. Todos los derechos reservados.</p>
         </footer>
     </div>
-
+ 
     <!-- =======================
-            SCRIPT
+            SCRIPT MODIFICADO
     ======================== -->
     <script>
-        //<script>
-document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function() {
 
-    const loginView = document.getElementById("login-view");
-    const plataformaView = document.getElementById("plataforma-view");
+            const loginView = document.getElementById("login-view");
+            const plataformaView = document.getElementById("plataforma-view");
+            const loginForm = document.getElementById("login-form");
 
-    const loginForm = document.getElementById("login-form");
+            // Secciones del sistema
+            const sections = {
+                estudiantes: document.getElementById("estudiantes-section"),
+                cursos: document.getElementById("cursos-section"),
+                profesores: document.getElementById("profesores-section")
+            };
 
-    // Secciones del sistema (IDs correctos)
-    const sections = {
-        estudiantes: document.getElementById("estudiantes-section"),
-        cursos: document.getElementById("cursos-section"),
-        profesores: document.getElementById("profesores-section")
-    };
+            // Menú de navegación
+            const navLinks = {
+                estudiantes: document.getElementById("nav-estudiantes"),
+                cursos: document.getElementById("nav-cursos"),
+                profesores: document.getElementById("nav-profesores"),
+                salir: document.getElementById("nav-salir")
+            };
 
-    // Menú de navegación
-    const navLinks = {
-        estudiantes: document.getElementById("nav-estudiantes"),
-        cursos: document.getElementById("nav-cursos"),
-        profesores: document.getElementById("nav-profesores"),
-        salir: document.getElementById("nav-salir")
-    };
 
-    // Mostrar vista (login o plataforma)
-    function showView(view) {
-        loginView.style.display = (view === 'login') ? 'flex' : 'none';
-        plataformaView.style.display = (view === 'plataforma') ? 'block' : 'none';
-    }
+            /* ======================================================
+                 VALIDACIÓN DE FORMULARIO DE LOGIN
+            ====================================================== */
 
-    // Mostrar solo una sección
-    function showSection(sectionId) {
+            // Email
+            const emailInput = document.getElementById("email");
 
-        // Ocultar todas
-        Object.values(sections).forEach(sec => {
-            sec.style.display = 'none';
-        });
-
-        // Quitar active en nav
-        Object.values(navLinks).forEach(ln => {
-            ln.classList.remove('active');
-        });
-
-        // Mostrar la sección elegida
-        sections[sectionId].style.display = 'block';
-
-        // Activar el botón
-        navLinks[sectionId].classList.add('active');
-    }
-
-    // Login
-    loginForm.addEventListener("submit", function(e) {
-        e.preventDefault();
-        showView('plataforma');
-        showSection('estudiantes');
-    });
-
-    // Eventos del menú
-    navLinks.estudiantes.addEventListener("click", () => showSection('estudiantes'));
-    navLinks.cursos.addEventListener("click", () => showSection('cursos'));
-    navLinks.profesores.addEventListener("click", () => showSection('profesores'));
-
-    navLinks.salir.addEventListener("click", () => {
-        showView('login');
-    });
-// --- Selección de filas en tablas ---
-function enableRowSelection() {
-    const tables = document.querySelectorAll("table");
-
-    tables.forEach(table => {
-        const rows = table.querySelectorAll("tbody tr");
-
-        rows.forEach(row => {
-            row.addEventListener("click", () => {
-
-                // Quitar selección previa
-                rows.forEach(r => r.classList.remove("selected"));
-
-                // Seleccionar la fila clickeada
-                row.classList.add("selected");
+            emailInput.addEventListener("invalid", function () {
+                if (emailInput.validity.valueMissing) {
+                    emailInput.setCustomValidity("Por favor ingrese su correo electrónico.");
+                } else if (emailInput.validity.typeMismatch) {
+                    emailInput.setCustomValidity("Ingrese un correo electrónico válido (ejemplo: usuario@correo.com).");
+                }
             });
+
+            emailInput.addEventListener("input", function () {
+                emailInput.setCustomValidity("");
+            });
+
+            // Contraseña
+            const passwordInput = document.getElementById("password");
+
+            passwordInput.addEventListener("invalid", function () {
+                if (passwordInput.validity.valueMissing) {
+                    passwordInput.setCustomValidity("Por favor ingrese su contraseña.");
+                }
+            });
+
+            passwordInput.addEventListener("input", function () {
+                passwordInput.setCustomValidity("");
+            });
+
+
+            // Verificar si ya hay una sesión activa
+            function checkExistingSession() {
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                if (isLoggedIn === 'true') {
+                    showView('plataforma');
+                    showSection('estudiantes');
+                } else {
+                    showView('login');
+                }
+            }
+
+            // Mostrar vista correcta
+            function showView(view) {
+                loginView.style.display = (view === 'login') ? 'flex' : 'none';
+                plataformaView.style.display = (view === 'plataforma') ? 'block' : 'none';
+            }
+
+            // Cambiar de sección
+            function showSection(sectionId) {
+                Object.values(sections).forEach(sec => sec.style.display = 'none');
+                Object.values(navLinks).forEach(ln => ln.classList.remove('active'));
+                sections[sectionId].style.display = 'block';
+                navLinks[sectionId].classList.add('active');
+            }
+
+            // Login correcto
+            loginForm.addEventListener("submit", function(e) {
+                e.preventDefault();
+                localStorage.setItem('isLoggedIn', 'true');
+                showView('plataforma');
+                showSection('estudiantes');
+            });
+
+            // Eventos menú
+            navLinks.estudiantes.addEventListener("click", () => showSection('estudiantes'));
+            navLinks.cursos.addEventListener("click", () => showSection('cursos'));
+            navLinks.profesores.addEventListener("click", () => showSection('profesores'));
+
+            // Logout
+            navLinks.salir.addEventListener("click", () => {
+                localStorage.removeItem('isLoggedIn');
+                showView('login');
+                loginForm.reset();
+            });
+
+            // Selección de filas
+            function enableRowSelection() {
+                const tables = document.querySelectorAll("table");
+
+                tables.forEach(table => {
+                    const rows = table.querySelectorAll("tbody tr");
+
+                    rows.forEach(row => {
+                        row.addEventListener("click", () => {
+                            rows.forEach(r => r.classList.remove("selected"));
+                            row.classList.add("selected");
+                        });
+                    });
+                });
+            }
+
+            enableRowSelection();
+            checkExistingSession();
         });
-    });
-}
-
-// Activar después de cargar
-enableRowSelection();
-
-    showView('login');
-});
-</script>
     </script>
-    <a href="https://eam-cr.github.io/Proyecto-II-51/Proyecto/Proyecto.index.html"></a>
 
 </body>
 </html>
