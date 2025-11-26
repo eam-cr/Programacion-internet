@@ -166,95 +166,98 @@
             SCRIPT
     ======================== -->
     <script>
-        // Espera a que el DOM esté cargado
-        document.addEventListener("DOMContentLoaded", function() {
-            
-            // Vistas principales
-            const loginView = document.getElementById("login-view");
-            const plataformaView = document.getElementById("plataforma-view");
-            
-            // Formulario de Login
-            const loginForm = document.getElementById("login-form");
-            
-            // Secciones de la plataforma
-            const sections = {
-                estudiantes: document.getElementById("estudiantes-seleccion"),
-                cursos: document.getElementById("cursos-seleccion"),
-                profesores: document.getElementById("profesores-seleccion")
-            };
-            
-            // Enlaces de navegación
-            const navLinks = {
-                estudiantes: document.getElementById("nav-estudiantes"),
-                cursos: document.getElementById("nav-cursos"),
-                profesores: document.getElementById("nav-profesores"),
-                salir: document.getElementById("nav-salir")
-            };
-            
-            // Función para mostrar una vista (Login o Plataforma)
-            function showView(viewToShow) {
-                loginView.style.display = (viewToShow === 'login') ? 'flex' : 'none';
-                plataformaView.style.display = (viewToShow === 'plataforma') ? 'block' : 'none';
-            }
+        //<script>
+document.addEventListener("DOMContentLoaded", function() {
 
-            // Función para mostrar una sección de la plataforma
-            function showSection(sectionId) {
-                // Ocultar todas las secciones
-                Object.values(sections).forEach(section => {
-                    section.style.display = 'none';
-                });
-                // Quitar 'active' de todos los links
-                Object.values(navLinks).forEach(link => {
-                    if (link) link.classList.remove('active');
-                });
-                
-                // Mostrar la sección seleccionada
-                if (sections[sectionId]) {
-                    sections[sectionId].style.display = 'block';
-                }
-                // Marcar el link como activo
-                if (navLinks[sectionId]) {
-                    navLinks[sectionId].classList.add('active');
-                }
-            }
+    const loginView = document.getElementById("login-view");
+    const plataformaView = document.getElementById("plataforma-view");
 
-            // --- Eventos ---
+    const loginForm = document.getElementById("login-form");
 
-            // 1. Manejar el envío del formulario de Login
-            loginForm.addEventListener("submit", function(event) {
-                event.preventDefault(); // Evita que la página se recargue
-                
-                // Oculta login, muestra plataforma
-                showView('plataforma');
-                // Muestra la sección de estudiantes por defecto
-                showSection('estudiantes');
-            });
+    // Secciones del sistema (IDs correctos)
+    const sections = {
+        estudiantes: document.getElementById("estudiantes-section"),
+        cursos: document.getElementById("cursos-section"),
+        profesores: document.getElementById("profesores-section")
+    };
 
-            // 2. Manejar clic en "Estudiantes"
-            navLinks.estudiantes.addEventListener("click", function() {
-                showSection('estudiantes');
-            });
+    // Menú de navegación
+    const navLinks = {
+        estudiantes: document.getElementById("nav-estudiantes"),
+        cursos: document.getElementById("nav-cursos"),
+        profesores: document.getElementById("nav-profesores"),
+        salir: document.getElementById("nav-salir")
+    };
 
-            // 3. Manejar clic en "Cursos"
-            navLinks.cursos.addEventListener("click", function() {
-                showSection('cursos');
-            });
+    // Mostrar vista (login o plataforma)
+    function showView(view) {
+        loginView.style.display = (view === 'login') ? 'flex' : 'none';
+        plataformaView.style.display = (view === 'plataforma') ? 'block' : 'none';
+    }
 
-            // 4. Manejar clic en "Profesores"
-            navLinks.profesores.addEventListener("click", function() {
-                showSection('profesores');
-            });
+    // Mostrar solo una sección
+    function showSection(sectionId) {
 
-            // 5. Manejar clic en "Salir"
-            navLinks.salir.addEventListener("click", function() {
-                // Oculta plataforma, muestra login
-                showView('login');
-            });
-
-            // Estado inicial: Mostrar solo el login
-            showView('login');
+        // Ocultar todas
+        Object.values(sections).forEach(sec => {
+            sec.style.display = 'none';
         });
+
+        // Quitar active en nav
+        Object.values(navLinks).forEach(ln => {
+            ln.classList.remove('active');
+        });
+
+        // Mostrar la sección elegida
+        sections[sectionId].style.display = 'block';
+
+        // Activar el botón
+        navLinks[sectionId].classList.add('active');
+    }
+
+    // Login
+    loginForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        showView('plataforma');
+        showSection('estudiantes');
+    });
+
+    // Eventos del menú
+    navLinks.estudiantes.addEventListener("click", () => showSection('estudiantes'));
+    navLinks.cursos.addEventListener("click", () => showSection('cursos'));
+    navLinks.profesores.addEventListener("click", () => showSection('profesores'));
+
+    navLinks.salir.addEventListener("click", () => {
+        showView('login');
+    });
+// --- Selección de filas en tablas ---
+function enableRowSelection() {
+    const tables = document.querySelectorAll("table");
+
+    tables.forEach(table => {
+        const rows = table.querySelectorAll("tbody tr");
+
+        rows.forEach(row => {
+            row.addEventListener("click", () => {
+
+                // Quitar selección previa
+                rows.forEach(r => r.classList.remove("selected"));
+
+                // Seleccionar la fila clickeada
+                row.classList.add("selected");
+            });
+        });
+    });
+}
+
+// Activar después de cargar
+enableRowSelection();
+
+    showView('login');
+});
+</script>
     </script>
+    <a href="https://eam-cr.github.io/Proyecto-II-51/Proyecto/Proyecto.index.html"></a>
 
 </body>
 </html>
