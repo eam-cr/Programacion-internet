@@ -18,7 +18,7 @@ body {
     background-color: #f4f6f4; /* Fondo claro del contenedor */
     padding: 30px; /* Espaciado interno generoso */
     border-radius: 8px; /* Esquinas redondeadas modernas */
-    box-shadow: 0 4px 10px rgba(20, 13, 13, 0.1); /* Sombra sutil para profundidad */
+    box-shadow: 0 4px 10px rgb(250, 34, 5); /* Sombra sutil para profundidad */
 }
 
 /* --- Titulo del Login --- */
@@ -167,4 +167,11 @@ footer {
     margin-top: 30px; /* Separación del contenido principal */
     color: #b9b7b7; /* Color de texto discreto */
     background-color: #f9f9f9; /* Fondo sutil diferenciado */
+}
+tr.selected {
+    background-color: #68bac5 !important;/* Color de fondo para fila seleccionada en menu */
+}
+tr:hover {
+    background-color: #439ebe;/* Color de fondo al pasar el cursor en menu */
+    cursor: pointer;
 }
