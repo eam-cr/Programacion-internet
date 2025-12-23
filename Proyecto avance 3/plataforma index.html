@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plataforma Académica</title>
+</head>
+<body>
+
+<header><h1>Plataforma Universitaria</h1></header>
+<nav>
+  <a href="#login" id="link-login">Inicio de sesión</a>
+  <a href="#estudiantes" id="link-estudiantes">Estudiantes</a>
+  <a href="#cursos" id="link-cursos">Cursos</a>
+  <a href="#profesores" id="link-profesores">Profesores</a>
+  <a href="#registro" id="link-registro">Registro</a>
+  <a href="#" id="logoutBtn" class="hidden">Cerrar sesión</a>
+</nav>
+
+<main>
+  <!-- LOGIN -->
+  <section id="login">
+    <h2>Inicio de sesión</h2>
+    <form id="loginForm">
+      <label>Correo electrónico
+        <input type="email" id="loginEmail" required />
+      </label>
+      <label>Contraseña
+        <input type="password" id="loginPass" required minlength="4" />
+      </label>
+      <button type="submit">Ingresar</button>
+    </form>
+    <p id="loginMsg"></p>
+  </section>
+
+  <!-- ESTUDIANTES -->
+  <section id="estudiantes" class="hidden">
+    <h2>Estudiantes</h2>
+    <form id="estForm">
+      <label>Cédula <input name="cedula" required /></label>
+      <label>Nombre <input name="nombre" required /></label>
+      <label>Email <input type="email" name="email" required /></label>
+      <label>Teléfono <input name="telefono" /></label>
+      <button type="submit">Agregar</button>
+    </form>
+    <input type="search" id="searchEst" placeholder="Buscar estudiante..." aria-label="Buscar estudiante" />
+    <table id="estTable">
+      <thead><tr><th>ID</th><th>Cédula</th><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Acciones</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- CURSOS -->
+  <section id="cursos" class="hidden">
+    <h2>Cursos</h2>
+    <form id="curForm">
+      <label>Código <input name="codigo" required /></label>
+      <label>Nombre <input name="nombre" required /></label>
+      <label>Descripción <textarea name="descripcion"></textarea></label>
+      <button type="submit">Agregar</button>
+    </form>
+    <input type="search" id="searchCur" placeholder="Buscar curso..." aria-label="Buscar curso" />
+    <table id="curTable">
+      <thead><tr><th>ID</th><th>Código</th><th>Nombre</th><th>Descripción</th><th>Acciones</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- PROFESORES -->
+  <section id="profesores" class="hidden">
+    <h2>Profesores</h2>
+    <form id="profForm">
+      <label>Nombre <input name="nombre" required /></label>
+      <label>Email <input type="email" name="email" required /></label>
+      <label>Especialidad <input name="especialidad" /></label>
+      <button type="submit">Agregar</button>
+    </form>
+    <input type="search" id="searchProf" placeholder="Buscar profesor..." aria-label="Buscar profesor" />
+    <table id="profTable">
+      <thead><tr><th>ID</th><th>Nombre</th><th>Email</th><th>Especialidad</th><th>Acciones</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- REGISTRO -->
+  <section id="registro" class="hidden">
+    <h2>Registro de Matrícula</h2>
+    <form id="regForm">
+      <label>Estudiante
+        <select name="estudiante" id="selectEst" required></select>
+      </label>
+      <label>Curso
+        <select name="curso" id="selectCur" required></select>
+      </label>
+      <label>Profesor
+        <select name="profesor" id="selectProf" required></select>
+      </label>
+      <label>Cuatrimestre
+        <select name="cuatrimestre" id="selectCuatr" required>
+          <option value="I">I</option>
+          <option value="II">II</option>
+          <option value="III">III</option>
+          <option value="IV">IV</option>
+        </select>
+      </label>
+      <label>Año
+        <input type="number" name="anio" id="inputAnio" min="2000" max="2100" step="1" required />
+      </label>
+      <button type="submit">Matricular</button>
+    </form>
+    <input type="search" id="searchReg" placeholder="Buscar registro..." aria-label="Buscar registro" />
+    <table id="regTable">
+      <thead><tr><th>ID</th><th>Estudiante</th><th>Curso</th><th>Profesor</th><th>Cuatrimestre</th><th>Año</th><th>Acciones</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+</main>
+
+<footer>© Plataforma Universitaria</footer>
+<div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<!-- SUPABASE SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  // =========================
+  // Configuración Supabase
+  // =========================
+  const SUPABASE_URL = "https://vnlhwngdquzsdpvkimga.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZubGh3bmdkcXV6c2RwdmtpbWdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY0NDA1MjYsImV4cCI6MjA4MjAxNjUyNn0.mxLwTZY9Tsg5GDXEAtU_xQzzqyuLEqNma-PnY0ZaMF8";
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // =========================
+  // Utilidades UI
+  // =========================
+  const toast = document.getElementById('toast');
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  function confirmDialog(mensaje, onConfirm) {
+    if (typeof HTMLDialogElement === 'undefined') {
+      if (confirm(mensaje)) onConfirm?.();
+      return;
+    }
+    const dlg = document.createElement('dialog');
+    dlg.innerHTML = `
+      <form method="dialog">
+        <p>${mensaje}</p>
+        <div class="dialog-actions">
+          <button class="btn-primary" value="ok">Confirmar</button>
+          <button class="btn-muted" value="cancel">Cancelar</button>
+        </div>
+      </form>`;
+    document.body.appendChild(dlg);
+    dlg.showModal();
+    dlg.addEventListener('close', () => {
+      if (dlg.returnValue === 'ok') onConfirm?.();
+      dlg.remove();
+    });
+  }
+
+  // =========================
+  // Navegación y login
+  // =========================
+  const sections = ['login','estudiantes','cursos','profesores','registro'];
+  function mostrarSolo(id) {
+    sections.forEach(s => {
+      const el = document.getElementById(s);
+      if (!el) return;
+      el.classList.toggle('hidden', s !== id);
+    });
+    document.querySelectorAll('nav a').forEach(a => {
+      const destino = a.getAttribute('href')?.replace('#','');
+      a.classList.toggle('active', destino === id);
+    });
+  }
+  mostrarSolo('login'); // estado inicial
+
+  const loginForm = document.getElementById('loginForm');
+  const loginMsg = document.getElementById('loginMsg');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const linkLogin = document.getElementById('link-login');
+
+  loginForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!document.getElementById('loginEmail').value || !document.getElementById('loginPass').value) return;
+
+    loginMsg.textContent = "Ingreso exitoso. Bienvenido.";
+    document.getElementById('login').style.display = "none";
+    logoutBtn.classList.remove('hidden');
+    linkLogin.style.display = "none";
+    showToast("Has iniciado sesión correctamente.");
+
+    await preloadData();  // carga desde Supabase
+    actualizarSelects();  // preparar selects
+    setAnioActual();      // año actual
+    mostrarSolo('estudiantes');
+  });
+
+  logoutBtn.addEventListener('click', e => {
+    e.preventDefault();
+    loginMsg.textContent = "Has cerrado sesión.";
+    logoutBtn.classList.add('hidden');
+    document.getElementById('login').style.display = "block";
+    linkLogin.style.display = "inline";
+    showToast("Sesión cerrada.");
+    mostrarSolo('login');
+  });
+
+  document.querySelectorAll('nav a').forEach(enlace => {
+    enlace.addEventListener('click', e => {
+      const destino = enlace.getAttribute('href').replace('#','');
+      e.preventDefault();
+      if (destino === 'login') {
+        logoutBtn.click();
+      } else {
+        if (logoutBtn.classList.contains('hidden')) return;
+        if (destino === 'registro') { actualizarSelects(); setAnioActual(); }
+        mostrarSolo(destino);
+      }
+    });
+  });
+
+  // =========================
+  // CRUD contador
+  // =========================
+  function setupCRUD(formId, tableId, searchId, fields, { onCreate, onUpdate, onDelete } = {}) {
+    let idCounter = 1;
+    const form = document.getElementById(formId);
+    const tbody = document.querySelector(`#${tableId} tbody`);
+    const search = document.getElementById(searchId);
+
+    // Crear
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+      confirmDialog('¿Deseas guardar este nuevo registro?', async () => {
+        if (onCreate) await onCreate(data);
+        addRow(tbody, idCounter++, fields, data, { onUpdate, onDelete, tableId });
+        form.reset();
+        showToast("Registro agregado correctamente.");
+      });
+    });
+
+    // Buscar
+    search?.addEventListener('input', () => {
+      const term = search.value.toLowerCase();
+      tbody.querySelectorAll('tr').forEach(tr => {
+        tr.style.display = tr.textContent.toLowerCase().includes(term) ? '' : 'none';
+      });
+    });
+
+    return {
+      addRow: (data) => addRow(tbody, idCounter++, fields, data, { onUpdate, onDelete, tableId }),
+      setCounter: (n) => { idCounter = n; },
+      clear: () => { tbody.innerHTML = ''; idCounter = 1; }
+    };
+  }
+
+  // Añadir fila + eliminar + editar (UI + Supabase)
+  function addRow(tbody, id, fields, data, { onUpdate, onDelete, tableId }) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${data.id ?? id}</td>
+      ${fields.map(f => `<td>${(data[f] ?? '').toString()}</td>`).join('')}
+      <td class="actions">
+        <button class="icon btn-editar" title="Editar" aria-label="Editar">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"/></svg>
+        </button>
+        <button class="icon btn-eliminar" title="Eliminar" aria-label="Eliminar">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 7h12v2H6V7zm2 3h8l-1 10H9L8 10zm3-7h2l1 2h-4l1-2z"/></svg>
+        </button>
+      </td>`;
+    tbody.appendChild(tr);
+
+    const cells = tr.querySelectorAll('td');
+    const currentId = Number(cells[0].textContent); // usar id de Supabase si existe
+
+    // Eliminar
+    tr.querySelector('.btn-eliminar').addEventListener('click', () => {
+      confirmDialog('¿Seguro que deseas eliminar este registro?', async () => {
+        if (onDelete) await onDelete(currentId);
+        tr.remove();
+        showToast("Registro eliminado.");
+        if (tableId === 'estTable' || tableId === 'curTable' || tableId === 'profTable') {
+          actualizarSelects(); // mantener selects consistentes
+        }
+      });
+    });
+
+    // Editar
+    tr.querySelector('.btn-editar').addEventListener('click', () => {
+      const dlg = document.createElement('dialog');
+      dlg.innerHTML = `
+        <form method="dialog">
+          <h3>Editar registro</h3>
+          ${fields.map((f,i) => `
+            <label>${f.charAt(0).toUpperCase()+f.slice(1)}
+              <input name="${f}" value="${cells[i+1].textContent}">
+            </label>`).join('')}
+          <div class="dialog-actions">
+            <button id="saveBtn" class="btn-primary">Guardar cambios</button>
+            <button class="btn-muted" onclick="this.closest('dialog').close()">Cancelar</button>
+          </div>
+        </form>`;
+      document.body.appendChild(dlg);
+      if (typeof HTMLDialogElement !== 'undefined') dlg.showModal();
+
+      dlg.querySelector('#saveBtn').addEventListener('click', async (ev) => {
+        ev.preventDefault();
+        confirmDialog('¿Confirmas los cambios realizados?', async () => {
+          const cambios = {};
+          fields.forEach((f,i) => {
+            const val = dlg.querySelector(`[name="${f}"]`).value;
+            cambios[f] = val;
+            cells[i+1].textContent = val;
+          });
+          if (onUpdate) await onUpdate(currentId, cambios);
+          if (typeof HTMLDialogElement !== 'undefined') dlg.close();
+          dlg.remove();
+          showToast("Registro actualizado correctamente.");
+          if (tableId === 'estTable' || tableId === 'curTable' || tableId === 'profTable') {
+            actualizarSelects();
+          }
+        });
+      });
+    });
+  }
+
+  // =========================
+  // Integración Supabase (acciones concretas)
+  // =========================
+  async function insertarSupabase(tabla, data) {
+    const { data: inserted, error } = await sb.from(tabla).insert([data]).select('*').single();
+    if (error) throw error;
+    return inserted; // devuelve fila con id
+  }
+  async function consultarSupabase(tabla) {
+    const { data, error } = await sb.from(tabla).select('*').order('id', { ascending: true });
+    if (error) throw error;
+    return data;
+  }
+  async function actualizarSupabase(tabla, id, cambios) {
+    const { error } = await sb.from(tabla).update(cambios).eq('id', id);
+    if (error) throw error;
+  }
+  async function eliminarSupabase(tabla, id) {
+    const { error } = await sb.from(tabla).delete().eq('id', id);
+    if (error) throw error;
+  }
+
+  // =========================
+  // Instanciar CRUDs con hooks Supabase
+  // =========================
+  const estCRUD = setupCRUD('estForm','estTable','searchEst',['cedula','nombre','email','telefono'],{
+    onCreate: async (data) => {
+      try {
+        const row = await insertarSupabase('estudiantes', data);
+        estCRUD.addRow(row);
+        showToast("Estudiante guardado en Supabase");
+      } catch (e) { console.error(e); showToast("Error al guardar estudiante"); }
+    },
+    onUpdate: async (id, cambios) => {
+      try { await actualizarSupabase('estudiantes', id, cambios); showToast("Estudiante actualizado en Supabase"); }
+      catch(e){ console.error(e); showToast("Error al actualizar estudiante"); }
+    },
+    onDelete: async (id) => {
+      try { await eliminarSupabase('estudiantes', id); showToast("Estudiante eliminado en Supabase"); }
+      catch(e){ console.error(e); showToast("Error al eliminar estudiante"); }
+    }
+  });
+
+  const curCRUD = setupCRUD('curForm','curTable','searchCur',['codigo','nombre','descripcion'],{
+    onCreate: async (data) => {
+      try {
+        const row = await insertarSupabase('cursos', data);
+        curCRUD.addRow(row);
+        showToast("Curso guardado en Supabase");
+      } catch (e) { console.error(e); showToast("Error al guardar curso"); }
+    },
+    onUpdate: async (id, cambios) => {
+      try { await actualizarSupabase('cursos', id, cambios); showToast("Curso actualizado en Supabase"); }
+      catch(e){ console.error(e); showToast("Error al actualizar curso"); }
+    },
+    onDelete: async (id) => {
+      try { await eliminarSupabase('cursos', id); showToast("Curso eliminado en Supabase"); }
+      catch(e){ console.error(e); showToast("Error al eliminar curso"); }
+    }
+  });
+
+  const profCRUD = setupCRUD('profForm','profTable','searchProf',['nombre','email','especialidad'],{
+    onCreate: async (data) => {
+      try {
+        const row = await insertarSupabase('profesores', data);
+        profCRUD.addRow(row);
+        showToast("Profesor guardado en Supabase");
+      } catch (e) { console.error(e); showToast("Error al guardar profesor"); }
+    },
+    onUpdate: async (id, cambios) => {
+      try { await actualizarSupabase('profesores', id, cambios); showToast("Profesor actualizado en Supabase"); }
+      catch(e){ console.error(e); showToast("Error al actualizar profesor"); }
+    },
+    onDelete: async (id) => {
+      try { await eliminarSupabase('profesores', id); showToast("Profesor eliminado en Supabase"); }
+      catch(e){ console.error(e); showToast("Error al eliminar profesor"); }
+    }
+  });
+
+  const regCRUD = setupCRUD('regForm','regTable','searchReg',['estudiante','curso','profesor','cuatrimestre','anio'],{
+    onCreate: async (data) => {
+      // Si usas modelo normalizado, aquí deberías enviar IDs. Este ejemplo usa texto simple (no FK).
+      try {
+        data.anio = Number(data.anio);
+        const row = await insertarSupabase('registro', data);
+        regCRUD.addRow(row);
+        showToast("Matrícula guardada en Supabase");
+      } catch (e) { console.error(e); showToast("Error al guardar matrícula"); }
+    },
+    onUpdate: async (id, cambios) => {
+      try { if ('anio' in cambios) cambios.anio = Number(cambios.anio); await actualizarSupabase('registro', id, cambios); showToast("Matrícula actualizada en Supabase"); }
+      catch(e){ console.error(e); showToast("Error al actualizar matrícula"); }
+    },
+    onDelete: async (id) => {
+      try { await eliminarSupabase('registro', id); showToast("Matrícula eliminada en Supabase"); }
+      catch(e){ console.error(e); showToast("Error al eliminar matrícula"); }
+    }
+  });
+
+  // =========================
+  // Precarga de datos desde Supabase al iniciar sesión
+  // =========================
+  async function preloadData() {
+    try {
+      // Limpiar tablas UI antes de cargar
+      estCRUD.clear(); curCRUD.clear(); profCRUD.clear(); regCRUD.clear();
+
+      const [estudiantes, cursos, profesores, registros] = await Promise.all([
+        consultarSupabase('estudiantes'),
+        consultarSupabase('cursos'),
+        consultarSupabase('profesores'),
+        consultarSupabase('registro')
+      ]);
+
+      estudiantes.forEach(e => estCRUD.addRow(e)); estCRUD.setCounter(estudiantes.length + 1);
+      cursos.forEach(c => curCRUD.addRow(c));       curCRUD.setCounter(cursos.length + 1);
+      profesores.forEach(p => profCRUD.addRow(p));  profCRUD.setCounter(profesores.length + 1);
+      registros.forEach(r => regCRUD.addRow(r));    regCRUD.setCounter(registros.length + 1);
+    } catch (e) {
+      console.error(e);
+      showToast("Error al cargar datos desde Supabase");
+    }
+  }
+
+  // =========================
+  // Registro: selects dinámicos + año actual
+  // =========================
+  function actualizarSelects() {
+    const selectEst = document.getElementById('selectEst');
+    const selectCur = document.getElementById('selectCur');
+    const selectProf = document.getElementById('selectProf');
+    if (!selectEst || !selectCur || !selectProf) return;
+
+    [selectEst, selectCur, selectProf].forEach(sel => sel.innerHTML = "");
+
+    // Estudiantes: columna Nombre (3ra)
+    document.querySelectorAll('#estTable tbody tr').forEach(tr => {
+      const nombre = tr.children[2]?.textContent || '';
+      if (nombre) selectEst.add(new Option(nombre, nombre));
+    });
+
+    // Cursos: columna Nombre (3ra)
+    document.querySelectorAll('#curTable tbody tr').forEach(tr => {
+      const nombre = tr.children[2]?.textContent || '';
+      if (nombre) selectCur.add(new Option(nombre, nombre));
+    });
+
+    // Profesores: columna Nombre (2da)
+    document.querySelectorAll('#profTable tbody tr').forEach(tr => {
+      const nombre = tr.children[1]?.textContent || '';
+      if (nombre) selectProf.add(new Option(nombre, nombre));
+    });
+  }
+
+  function setAnioActual() {
+    const inputAnio = document.getElementById('inputAnio');
+    if (inputAnio && !inputAnio.value) {
+      inputAnio.value = String(new Date().getFullYear());
+    }
+  }
+
+  // Mantener selects actualizados al entrar a Registro
+  document.getElementById('link-registro').addEventListener('click', () => {
+    actualizarSelects();
+    setAnioActual();
+  });
+</script>
+//= Githud 
+<link rel="stylesheet" href="">
+
+<style>
+  :root {
+    --bg: #111621; --panel: #1f2937; --border: #334155; --text: #e5e7eb;
+    --primary: #38bdf8; --danger: #f87171;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:var(--bg); color:var(--text); margin:0; }
+  header, nav, footer { background:#111827; padding:10px 16px; }
+  header h1 { margin:0; font-size:20px; }
+  nav a { color:var(--text); margin-right:12px; text-decoration:none; }
+  nav a:hover { color:var(--primary); }
+  .active { color:var(--primary); font-weight:600; }
+  main { padding-bottom:40px; }
+  section { background:var(--panel); padding:16px; margin:16px; border-radius:10px; border:1px solid var(--border); }
+  form { display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; }
+  label { display:flex; flex-direction:column; font-size:14px; gap:6px; min-width:220px; }
+  input, textarea, select { padding:8px; border-radius:8px; border:1px solid var(--border); background:#0b1220; color:var(--text); }
+  textarea { min-height:64px; }
+  form button[type="submit"] { padding:8px 12px; border:0; border-radius:8px; background:var(--primary); color:#082f49; font-weight:600; cursor:pointer; }
+  input[type="search"] { margin-top:10px; width:100%; max-width:360px; }
+  table { width:100%; border-collapse:collapse; margin-top:10px; font-size:14px; }
+  th, td { border-bottom:1px solid var(--border); padding:8px; text-align:left; }
+  .hidden { display:none; }
+  dialog { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:18px; color:var(--text); max-width:520px; }
+  dialog::backdrop { background:rgba(0,0,0,.6); }
+  .actions { display:flex; gap:8px; }
+  button.icon { background:none; border:none; cursor:pointer; padding:6px; border-radius:8px; }
+  button.icon svg { width:18px; height:18px; display:block; }
+  .btn-eliminar svg { fill:var(--danger); }
+  .btn-editar svg { fill:var(--primary); }
+  .btn-eliminar:hover svg { fill:#dc2626; }
+  .btn-editar:hover svg { fill:#0ea5e9; }
+  #toast { position:fixed; bottom:20px; right:20px; background:#0b3b53; color:#a5f3fc; padding:10px 14px; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.35); opacity:0; transform:translateY(10px); transition:all .25s; z-index:1000; }
+  #toast.show { opacity:1; transform:translateY(0); }
+  .dialog-actions { display:flex; gap:10px; margin-top:14px; }
+  .btn-primary { background:var(--primary); color:#082f49; border:0; border-radius:8px; padding:8px 12px; cursor:pointer; }
+  .btn-muted { background:#334155; color:var(--text); border:0; border-radius:8px; padding:8px 12px; cursor:pointer; }
+</style>
+</body>
+</html>
